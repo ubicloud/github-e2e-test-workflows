@@ -9,12 +9,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Check kernel version
+      - name: Print kernel version
         run: uname -mr
 
-      - name: Check OS version
+      - name: Print OS version
         run: lsb_release -a
 
       - name: Print environment variables
