@@ -1,0 +1,36 @@
+name: Test Language Caches
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_type:
+        required: true
+        type: string
+
+jobs:
+  cache_tests:
+    runs-on: ${{ inputs.runner_type }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Go tests
+        uses: ./.github/workflows/test_go.yml
+        with:
+          runner_type: ${{ inputs.runner_type }}
+
+      - name: Run Python tests
+        uses: ./.github/workflows/test_python.yml
+        with:
+          runner_type: ${{ inputs.runner_type }}
+
+      - name: Run Ruby tests
+        uses: ./.github/workflows/test_ruby.yml
+        with:
+          runner_type: ${{ inputs.runner_type }}
+
+      - name: Run Restore/Save Cache tests
+        uses: ./.github/workflows/test_restore_save_cache.yml
+        with:
+          runner_type: ${{ inputs.runner_type }}

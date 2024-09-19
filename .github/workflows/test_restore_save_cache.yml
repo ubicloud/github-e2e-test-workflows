@@ -1,0 +1,62 @@
+name: Test ruby cache code
+
+on:
+  workflow_call:
+    inputs:
+      runner_type:
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ${{ inputs.runner_type }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore cached folders
+        id: cache-config
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            myfolder
+            myfolder2
+          key: folders-${{ github.run_id }}.json
+      
+      - name: Generate configas7.json if not cached
+        if: steps.cache-config.outputs.cache-hit != 'true'
+        run: |
+          mkdir myfolder
+          dd if=/dev/urandom of=myfolder/file1.txt bs=1M count=100
+          mkdir myfolder2
+          dd if=/dev/urandom of=myfolder2/file1.txt bs=1M count=150
+
+      - name: Save Primes
+        id: cache-primes-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            myfolder
+            myfolder2
+          key: folders-${{ github.run_id }}.json
+
+      - name: Get folder size
+        run: |
+          du -sh myfolder myfolder2
+
+      - name: Delete folders
+        run: |
+          rm -rf myfolder myfolder2
+
+      - name: Restore cached folders again
+        id: cache-config-again
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            myfolder
+            myfolder2
+          key: folders-${{format('YYYYMMDDHHmmss', github.event.created_at)}}.json
+
+      - name: Get folder size
+        run: |
+          du -sh myfolder myfolder2

@@ -1,0 +1,21 @@
+name: Test go cache code
+
+on:
+  workflow_call:
+    inputs:
+      runner_type:
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ${{ inputs.runner_type }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.17'
+          check-latest: true
+          cache-dependency-path: |
+            go/go.sum

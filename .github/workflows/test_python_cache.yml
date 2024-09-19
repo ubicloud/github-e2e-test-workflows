@@ -1,0 +1,25 @@
+name: Test python cache code
+
+on:
+  workflow_call:
+    inputs:
+      runner_type:
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ${{ inputs.runner_type }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - run: pip install -r python/requirements.txt
+
+      - name: Run cache test
+        run: python python/test.py

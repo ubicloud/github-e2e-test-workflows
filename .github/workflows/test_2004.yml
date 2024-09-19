@@ -46,3 +46,8 @@ jobs:
 
       - name: Check filesystem
         run: sudo fsck -nf || [ $? -eq 4 ]
+
+  run_lang_caches:
+    uses: ./.github/workflows/test_lang_caches.yml
+    with:
+      runner_type: ubicloud-standard-2-ubuntu-2004
