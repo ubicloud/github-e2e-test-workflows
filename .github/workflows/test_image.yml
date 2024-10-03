@@ -1,0 +1,55 @@
+name: Test core functionality of image
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        required: true
+        type: string
+      image_os:
+        required: true
+        type: string
+
+jobs:
+  test:
+    name: ${{ inputs.image_os }}
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print kernel version
+        run: uname -mr
+
+      - name: Print OS version
+        run: lsb_release -a
+
+      - name: Print environment variables
+        run: printenv
+
+      - name: Print PATH
+        run: echo $PATH
+
+      - name: Verify that has more than 100 environment variables
+        run: |
+          count=$(env | wc -l)
+          if [ "$count" -lt 100 ]; then
+            echo "Environment has $count variables, expected at least 100"
+            exit 1
+          fi
+
+      - name: Verify that environment variables are set correctly
+        run: |
+          source ./test-helpers.sh
+          expect "$HOME" "/home/runner"
+          expect "$RUNNER_ARCH" "X64"
+          expect "$ImageOS" "${{ inputs.image_os }}"
+          expect "$ANDROID_HOME" "/usr/local/lib/android/sdk"
+          expect_path_variable "/home/runner/.cargo/bin"
+          expect_path_variable "/home/runner/.config/composer/vendor/bin"
+
+      - name: Try to update apt-get
+        run: sudo apt-get update
+
+      - name: Check filesystem
+        run: sudo fsck -nf || [ $? -eq 4 ]
