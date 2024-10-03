@@ -53,3 +53,6 @@ jobs:
 
       - name: Check filesystem
         run: sudo fsck -nf || [ $? -eq 4 ]
+      
+      - name: Check docker internet connectivity
+        run: docker run alpine ping -c 2 google.com
