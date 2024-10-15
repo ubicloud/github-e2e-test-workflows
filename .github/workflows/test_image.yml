@@ -9,10 +9,17 @@ on:
       image_os:
         required: true
         type: string
+      arch:
+        required: true
+        type: string
 
 jobs:
   test:
-    name: ${{ inputs.image_os }}
+    env:
+      EXPECTED_VARIABLE_COUNT: ${{ inputs.arch == 'x64' && 100 || 80 }}
+      EXPECTED_RUNNER_ARCH: ${{ inputs.arch == 'x64' && 'X64' || 'ARM64' }}
+      EXPECTED_ANDROID_HOME: ${{ inputs.arch == 'x64' && '/usr/local/lib/android/sdk' || '' }}
+    name: ${{ inputs.image_os }} ${{ inputs.arch }}
     runs-on: ${{ inputs.runner }}
     steps:
       - name: Checkout code
@@ -30,11 +37,11 @@ jobs:
       - name: Print PATH
         run: echo $PATH
 
-      - name: Verify that has more than 100 environment variables
+      - name: Verify that has environment variables more than expected count
         run: |
           count=$(env | wc -l)
-          if [ "$count" -lt 100 ]; then
-            echo "Environment has $count variables, expected at least 100"
+          if [ "$count" -lt $EXPECTED_VARIABLE_COUNT ]; then
+            echo "Environment has $count variables, expected at least $EXPECTED_VARIABLE_COUNT"
             exit 1
           fi
 
@@ -42,9 +49,9 @@ jobs:
         run: |
           source ./test-helpers.sh
           expect "$HOME" "/home/runner"
-          expect "$RUNNER_ARCH" "X64"
+          expect "$RUNNER_ARCH" "$EXPECTED_RUNNER_ARCH"
           expect "$ImageOS" "${{ inputs.image_os }}"
-          expect "$ANDROID_HOME" "/usr/local/lib/android/sdk"
+          expect "$ANDROID_HOME" "$EXPECTED_ANDROID_HOME"
           expect_path_variable "/home/runner/.cargo/bin"
           expect_path_variable "/home/runner/.config/composer/vendor/bin"
 

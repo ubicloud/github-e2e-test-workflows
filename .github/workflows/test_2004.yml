@@ -2,10 +2,17 @@ name: Test ubuntu-2004
 
 on:
   workflow_dispatch:
+    inputs:
+      arch:
+        required: true
+        type: choice
+        options: [x64, arm64]
+        default: x64
 
 jobs:
   test_image:
     uses: ./.github/workflows/test_image.yml
     with:
-      runner: ubicloud-standard-2-ubuntu-2004
+      runner: ${{ inputs.arch == 'x64' && 'ubicloud-standard-2-ubuntu-2004' || 'ubicloud-standard-2-arm-ubuntu-2004' }}
       image_os: ubuntu20
+      arch: ${{ inputs.arch }}
