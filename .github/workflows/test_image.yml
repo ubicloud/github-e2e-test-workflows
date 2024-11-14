@@ -19,7 +19,7 @@ jobs:
       EXPECTED_VARIABLE_COUNT: ${{ inputs.arch == 'x64' && 100 || 80 }}
       EXPECTED_RUNNER_ARCH: ${{ inputs.arch == 'x64' && 'X64' || 'ARM64' }}
       EXPECTED_ANDROID_HOME: ${{ inputs.arch == 'x64' && '/usr/local/lib/android/sdk' || '' }}
-    name: ${{ inputs.image_os }} ${{ inputs.arch }}
+    name: ${{ inputs.image_os }} ${{ inputs.arch }} core functionality
     runs-on: ${{ inputs.runner }}
     steps:
       - name: Checkout code
