@@ -42,3 +42,18 @@ jobs:
         with:
           ruby-version: '3.2.6'
           bundler-cache: true
+
+      - name: Generate folders and files to cache
+        run: |
+          mkdir myfolder
+          dd if=/dev/urandom of=myfolder/file1.txt bs=1M count=100
+          mkdir myfolder2
+          dd if=/dev/urandom of=myfolder2/file1.txt bs=1M count=150
+
+      - name: Save folders and files
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            myfolder
+            myfolder2
+          key: cached_folders
