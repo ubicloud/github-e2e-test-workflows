@@ -1,0 +1,3 @@
+// Just a sample dependency to check caching work
+github.com/stretchr/testify v1.7.0 h1:1CDZFwtvdxnfPUEciY+TvuiwxAXoaK3P3UoNde6GKtU=
+github.com/stretchr/testify v1.7.0/go.mod h1:FkQac1HR7MZ0cnMpGB7FZ5OIbL9G4yk6j9g9OR1MXT0=
