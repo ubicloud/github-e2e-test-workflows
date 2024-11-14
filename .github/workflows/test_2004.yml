@@ -11,7 +11,7 @@ on:
 
 jobs:
   test_image:
-    uses: ./.github/workflows/test_image.yml
+    uses: ./.github/workflows/test_all.yml
     with:
       runner: ${{ inputs.arch == 'x64' && 'ubicloud-standard-2-ubuntu-2004' || 'ubicloud-standard-2-arm-ubuntu-2004' }}
       image_os: ubuntu20
