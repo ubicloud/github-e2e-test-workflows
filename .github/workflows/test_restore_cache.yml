@@ -28,3 +28,8 @@ jobs:
           cache: 'pip'
 
       - run: pip install -r python/requirements.txt
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache-dependency-path: go/go.sum
