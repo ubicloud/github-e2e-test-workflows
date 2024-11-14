@@ -15,6 +15,9 @@ on:
 
 jobs:
   test:
+    env:
+      BUNDLE_GEMFILE: ./ruby/Gemfile
+
     name: ${{ inputs.image_os }} ${{ inputs.arch }} restore cache
     runs-on: ${{ inputs.runner }}
     steps:
