@@ -65,6 +65,16 @@ jobs:
           echo "Cache didn't hit for setup-ruby"
           exit 1
 
+      - name: Cache Rust dependencies
+        id: rust-cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Error if cache doesn't hit for rust-cache
+        if: steps.rust-cache.outputs.cache-hit == 'false'
+        run: |
+          echo "Cache didn't hit for rust-cache"
+          exit 1
+
       - name: Restore folders and files
         id: restore-file
         uses: actions/cache/restore@v4
