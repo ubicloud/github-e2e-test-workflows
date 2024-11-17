@@ -49,3 +49,18 @@ jobs:
       - name: Build Rust project
         run: cargo build
         working-directory: ./rust
+
+      - name: Generate folders and files to cache
+        run: |
+          mkdir myfolder
+          dd if=/dev/urandom of=myfolder/file1.txt bs=1M count=10
+          mkdir myfolder2
+          dd if=/dev/urandom of=myfolder2/file1.txt bs=1M count=15
+
+      - name: Save folders and files
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            myfolder
+            myfolder2
+          key: cached_folders

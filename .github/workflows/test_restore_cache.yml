@@ -71,3 +71,18 @@ jobs:
         run: |
           echo "Cache didn't hit for rust-cache"
           exit 1
+
+      - name: Restore folders and files
+        id: restore-file
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            myfolder
+            myfolder2
+          key: cached_folders
+
+      - name: Error if cache doesn't hit for restore-file
+        if: steps.restore-file.outputs.cache-hit == 'false'
+        run: |
+          echo "Cache didn't hit for restore-cache"
+          exit 1
