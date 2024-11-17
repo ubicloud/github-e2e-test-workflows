@@ -39,10 +39,18 @@ jobs:
 
       - run: pip install -r python/requirements.txt
 
-      - uses: actions/setup-go@v5
+      - name: Setup go with cache
+        uses: actions/setup-go@v5
+        id: setup-go
         with:
           go-version: '1.22'
           cache-dependency-path: go/go.sum
+
+      - name: Error if cache doesn't hit for setup-go
+        if: steps.setup-go.outputs.cache-hit == 'false'
+        run: |
+          echo "Cache didn't hit for setup-go"
+          exit 1
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
