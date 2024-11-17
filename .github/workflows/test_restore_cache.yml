@@ -37,8 +37,6 @@ jobs:
           echo "Cache didn't hit for setup-python"
           exit 1
 
-      - run: pip install -r python/requirements.txt
-
       - name: Setup go with cache
         uses: actions/setup-go@v5
         id: setup-go
