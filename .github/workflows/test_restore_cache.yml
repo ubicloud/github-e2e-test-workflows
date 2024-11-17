@@ -46,3 +46,18 @@ jobs:
         run: |
           echo "Cache didn't hit for setup-go"
           exit 1
+
+      - name: Setup Ruby with cache
+        id: setup-ruby
+        uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: ./ruby/Gemfile
+        with:
+          ruby-version: '3.2.6'
+          bundler-cache: true
+
+      - name: Error if cache doesn't hit for setup-ruby
+        if: steps.setup-ruby.outputs.cache-hit == 'false'
+        run: |
+          echo "Cache didn't hit for setup-ruby"
+          exit 1

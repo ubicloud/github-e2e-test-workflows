@@ -34,3 +34,11 @@ jobs:
         with:
           go-version: '1.22'
           cache-dependency-path: go/go.sum
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_GEMFILE: ./ruby/Gemfile
+        with:
+          ruby-version: '3.2.6'
+          bundler-cache: true
