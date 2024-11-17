@@ -42,3 +42,10 @@ jobs:
         with:
           ruby-version: '3.2.6'
           bundler-cache: true
+
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build Rust project
+        run: cargo build
+        working-directory: ./rust
