@@ -25,10 +25,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup python with cache
+        id: setup-python
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
           cache: 'pip'
+
+      - name: Error if cache doesn't hit for setup-python
+        if: steps.setup-python.outputs.cache-hit == 'false'
+        run: |
+          echo "Cache didn't hit for setup-python"
+          exit 1
 
       - run: pip install -r python/requirements.txt
 
