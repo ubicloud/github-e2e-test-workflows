@@ -1,0 +1,35 @@
+name: Test restore cache functionalities
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        required: true
+        type: string
+      image_os:
+        required: true
+        type: string
+      arch:
+        required: true
+        type: string
+
+jobs:
+  test:
+    name: ${{ inputs.image_os }} ${{ inputs.arch }} restore cache
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup python with cache
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - name: Error if cache doesn't hit for setup-python
+        if: steps.setup-python.outputs.cache-hit == 'false'
+        run: |
+          echo "Cache didn't hit for setup-python"
+          exit 1

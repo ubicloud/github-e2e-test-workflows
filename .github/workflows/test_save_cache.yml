@@ -1,0 +1,30 @@
+name: Test save cache functionalities
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        required: true
+        type: string
+      image_os:
+        required: true
+        type: string
+      arch:
+        required: true
+        type: string
+
+jobs:
+  test:
+    name: ${{ inputs.image_os }} ${{ inputs.arch }} save cache
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - run: pip install -r python/requirements.txt
