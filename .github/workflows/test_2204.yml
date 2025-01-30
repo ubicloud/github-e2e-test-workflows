@@ -13,6 +13,10 @@ on:
         required: false
         type: string
 
+concurrency:
+  group: ubuntu-2204-${{ inputs.arch }}
+  cancel-in-progress: true
+
 jobs:
   test_image:
     uses: ./.github/workflows/test_all.yml
