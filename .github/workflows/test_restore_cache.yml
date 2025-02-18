@@ -103,3 +103,7 @@ jobs:
         run: |
           echo "Cache didn't hit for build-docker"
           exit 1
+
+      - name: Print cache proxy log
+        run: sudo cat /var/log/cacheproxy.log
+        if: always()
