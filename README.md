@@ -1,6 +1,7 @@
 # GitHub E2E Test Workflows
 
 
+[![Test ubuntu-2404](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2404.yml/badge.svg)](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2404.yml)
 [![Test ubuntu-2204](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2204.yml/badge.svg)](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2204.yml) 
 
 
