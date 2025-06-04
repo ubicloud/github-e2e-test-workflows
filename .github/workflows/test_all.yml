@@ -22,7 +22,6 @@ jobs:
       arch: ${{ inputs.arch }}
 
   test_save_cache:
-    if: inputs.image_os != 'ubuntu20'
     uses: ./.github/workflows/test_save_cache.yml
     with:
       runner: ${{ inputs.runner }}
@@ -30,7 +29,6 @@ jobs:
       arch: ${{ inputs.arch }}
 
   test_restore_cache:
-    if: inputs.image_os != 'ubuntu20'
     needs: test_save_cache
     uses: ./.github/workflows/test_restore_cache.yml
     with:

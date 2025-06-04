@@ -2,7 +2,6 @@
 
 
 [![Test ubuntu-2204](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2204.yml/badge.svg)](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2204.yml) 
-[![Test ubuntu-2004](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2004.yml/badge.svg)](https://github.com/ubicloud/github-e2e-test-workflows/actions/workflows/test_2004.yml)
 
 
 
