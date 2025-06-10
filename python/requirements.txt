@@ -1,2 +1,2 @@
 # Just a sample dependency to check caching work
-requests==2.32.2
+requests==2.32.4
