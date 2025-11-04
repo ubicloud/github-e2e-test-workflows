@@ -21,7 +21,7 @@ jobs:
       CACHE_VERSION: ${{ inputs.runner }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Create version file trigger fresh cache
         run: |
@@ -29,7 +29,7 @@ jobs:
 
       - name: Setup python with cache
         id: setup-python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.9'
           cache: 'pip'
@@ -44,7 +44,7 @@ jobs:
           exit 1
 
       - name: Setup go with cache
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         id: setup-go
         with:
           go-version: '1.22'
@@ -106,7 +106,7 @@ jobs:
 
       - name: Build Docker image
         id: build-docker
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v6
         with:
           context: ./docker
           push: false
