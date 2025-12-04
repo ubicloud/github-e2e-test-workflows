@@ -6,16 +6,9 @@ on:
       runner:
         required: true
         type: string
-      image_os:
-        required: true
-        type: string
-      arch:
-        required: true
-        type: string
 
 jobs:
-  test:
-    name: ${{ inputs.image_os }} ${{ inputs.arch }} restore cache
+  restore_cache:
     runs-on: ${{ inputs.runner }}
     env:
       CACHE_VERSION: ${{ inputs.runner }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -78,7 +71,7 @@ jobs:
         id: rust-cache
         uses: Swatinem/rust-cache@v2
         with:
-          prefix-key: ${{ env.CACHE_VERSION }} 
+          prefix-key: ${{ env.CACHE_VERSION }}
 
       - name: Error if cache doesn't hit for rust-cache
         if: steps.rust-cache.outputs.cache-hit == 'false'
