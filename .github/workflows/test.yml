@@ -1,0 +1,51 @@
+name: Test runners
+run-name: ${{ inputs.triggered_by }} ${{ inputs.provider }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      triggered_by:
+        required: true
+        type: string
+      provider:
+        required: true
+        type: string
+      runners:
+        required: true
+        type: string
+        default: '["ubicloud-standard-2-ubuntu-2204","ubicloud-standard-2-ubuntu-2404"]'
+
+concurrency:
+  group: ${{ inputs.provider }}
+  cancel-in-progress: true
+
+jobs:
+  test_image:
+    strategy:
+      matrix:
+        runner: ${{ fromJson(inputs.runners) }}
+    name: ${{ matrix.runner }}
+    uses: ./.github/workflows/test_image.yml
+    with:
+      runner: ${{ matrix.runner }}
+      image_os: ${{ contains(matrix.runner, 'ubuntu-2204') && 'ubuntu22' || 'ubuntu24' }}
+      arch: ${{ contains(matrix.runner, 'arm') && 'arm64' || 'x64' }}
+
+  test_save_cache:
+    strategy:
+      matrix:
+        runner: ${{ fromJson(inputs.runners) }}
+    name: ${{ matrix.runner }}
+    uses: ./.github/workflows/test_save_cache.yml
+    with:
+      runner: ${{ matrix.runner }}
+
+  test_restore_cache:
+    strategy:
+      matrix:
+        runner: ${{ fromJson(inputs.runners) }}
+    name: ${{ matrix.runner }}
+    needs: test_save_cache
+    uses: ./.github/workflows/test_restore_cache.yml
+    with:
+      runner: ${{ matrix.runner }}

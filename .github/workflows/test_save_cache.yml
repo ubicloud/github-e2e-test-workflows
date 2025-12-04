@@ -6,16 +6,9 @@ on:
       runner:
         required: true
         type: string
-      image_os:
-        required: true
-        type: string
-      arch:
-        required: true
-        type: string
 
 jobs:
-  test:
-    name: ${{ inputs.image_os }} ${{ inputs.arch }} save cache
+  save_cache:
     runs-on: ${{ inputs.runner }}
     env:
       CACHE_VERSION: ${{ inputs.runner }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -58,7 +51,7 @@ jobs:
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
         with:
-          prefix-key: ${{ env.CACHE_VERSION }} 
+          prefix-key: ${{ env.CACHE_VERSION }}
 
       - name: Build Rust project
         run: cargo build
