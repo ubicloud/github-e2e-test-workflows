@@ -21,7 +21,7 @@ jobs:
       CACHE_VERSION: ${{ inputs.runner }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Create version file trigger fresh cache
         run: |
@@ -72,7 +72,7 @@ jobs:
           dd if=/dev/urandom of=myfolder2/file1.txt bs=1M count=15
 
       - name: Save folders and files
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: |
             myfolder
