@@ -21,7 +21,7 @@ jobs:
       CACHE_VERSION: ${{ inputs.runner }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Create version file trigger fresh cache
         run: |
@@ -88,7 +88,7 @@ jobs:
 
       - name: Restore folders and files
         id: restore-file
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: |
             myfolder
