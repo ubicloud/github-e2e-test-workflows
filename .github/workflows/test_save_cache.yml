@@ -52,6 +52,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           prefix-key: ${{ env.CACHE_VERSION }}
+          workspaces: ./rust
 
       - name: Build Rust project
         run: cargo build
